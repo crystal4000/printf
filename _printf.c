@@ -7,13 +7,15 @@ int handle_conversion_specifier(char specifier, va_list args);
 /**
  * _printf - Custom printf function
  * @format: Format string
- *
+ *i
  * Return: Number of characters printed (excluding the null byte)
  */
 int _printf(const char *format, ...)
 {
 	va_list args;
 	int count = 0;
+	int num, num_digits, temp, i;
+	char buffer[12];
 
 	if (format == NULL)
 		return (-1);
@@ -49,9 +51,8 @@ int handle_conversion_specifier(char specifier, va_list args)
 	int count = 0;
 	char ch;
 	char *str;
-	int num, num_digits, temp;
-	char buffer[12];
-	int i;
+	char num_str[12];
+	int len, num, num_digits, temp;
 
 	switch (specifier)
 	{
@@ -68,7 +69,7 @@ int handle_conversion_specifier(char specifier, va_list args)
 			}
 			else
 			{
-				while (str && *str)
+				while (*str)
 				{
 					count += write(1, str, 1);
 					str++;
@@ -78,30 +79,8 @@ int handle_conversion_specifier(char specifier, va_list args)
 		case 'd':
 		case 'i':
 			num = va_arg(args, int);
-			num_digits = 0;
-			temp = num;
-
-			if (num == 0)
-			{
-				count += write(1, "0", 1);
-				break;
-			}
-			if (num < 0)
-			{
-				count += write(1, "-", 1);
-				num = -num;
-			}
-			while (temp != 0)
-			{
-				temp /= 10;
-				num_digits++;
-			}
-			for (i = num_digits - 1; i >= 0; i--)
-			{
-				buffer[i] = '0' + (num % 10);
-				num /= 10;
-			}
-			count += write(1, buffer, num_digits);
+			len = sprintf(num_str, "%d", num);
+			count += write(1, num_str, len);
 			break;
 		case '%':
 			count += write(1, "%", 1);
