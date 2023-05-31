@@ -61,10 +61,18 @@ int handle_conversion_specifier(char specifier, va_list args)
 			break;
 		case 's':
 			str = va_arg(args, char *);
-			while (str && *str)
+
+			if (str == NULL)
 			{
-				count += write(1, str, 1);
-				str++;
+				count += write(1, "(null)", 6);
+			}
+			else
+			{
+				while (str && *str)
+				{
+					count += write(1, str, 1);
+					str++;
+				}
 			}
 			break;
 		case 'd':
