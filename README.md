@@ -70,3 +70,4 @@ int main(void)
 ## Authors
 
 - [Fredrick Eneye Tania-Amanda Nkoyo](https://github.com/crystal4000)
+- [Melanie Eureka Ngome] (https://github.com/Lanietodev)
